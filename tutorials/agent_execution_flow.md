@@ -3,6 +3,13 @@
 This note captures the end-to-end call order when running `tutorials/kyle_demo.py`
 with `A1(...)` followed by `agent.go(...)`. Links jump to code locations.
 
+## Core Flow Summary
+1. Gather all available resources (tools/data/libraries/know-how).
+2. Use the user's query to select relevant resources (LLM-based retrieval).
+3. Feed selected resources into the main LLM to generate steps (often code in `<execute>`).
+4. Execute the generated steps.
+5. Collect and return results (possibly looping generate ↔ execute).
+
 ## 0) Entry / Import
 - `tutorials/kyle_demo.py`: script entrypoint; constructs `A1` then calls `go`.
   - Link: `tutorials/kyle_demo.py`
