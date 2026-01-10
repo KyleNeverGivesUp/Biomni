@@ -14,6 +14,12 @@ from langchain_core.prompts import ChatPromptTemplate
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, START, StateGraph
 
+# Load .env as early as possible so modules like `biomni.config` can read env vars
+# during import-time initialization (e.g., default_config).
+if os.path.exists(".env"):
+    load_dotenv(".env", override=False)
+    print("Loaded environment variables from .env")
+
 from biomni.config import default_config
 from biomni.know_how import KnowHowLoader
 from biomni.llm import SourceType, get_llm
@@ -42,10 +48,6 @@ from biomni.utils import (
     should_skip_message,
     textify_api_dict,
 )
-
-if os.path.exists(".env"):
-    load_dotenv(".env", override=False)
-    print("Loaded environment variables from .env")
 
 
 class AgentState(TypedDict):
