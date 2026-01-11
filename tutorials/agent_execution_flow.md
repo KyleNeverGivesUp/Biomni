@@ -76,3 +76,23 @@ with `A1(...)` followed by `agent.go(...)`. Links jump to code locations.
   - Link: `biomni/agent/a1.py#L1546`
 - Workflow loops `execute → generate` until `<solution>`; then `END`.
   - Link: `biomni/agent/a1.py#L1633`
+
+## Log Mapping (log line → function → purpose)
+| Log line | Function | Purpose |
+| --- | --- | --- |
+| `Loaded environment variables from .env` | `biomni/agent/a1.py` (module import) | Load `.env` early so config sees env overrides. |
+| `Commercial mode: ...` / `Academic mode: ...` | `A1.__init__` | Indicate dataset licensing mode. |
+| `BIOMNI CONFIGURATION` / `DEFAULT CONFIG` | `A1.__init__` | Print the resolved config values. |
+| `Created directory: ...` | `A1.__init__` | Create the data path if missing. |
+| `Checking and downloading missing data lake files...` | `A1.__init__` | Download expected data lake files. |
+| `Checking and downloading benchmark files...` | `A1.__init__` | Download benchmark dataset folder. |
+| `Skipping datalake download (load_datalake=False)` | `A1.__init__` | Skip downloads when `expected_data_lake_files` is provided. |
+| `Loaded X know-how documents` | `A1.__init__` | Load know-how documents into memory. |
+| `Loading X know-how documents into system prompt` | `configure` | Inject know-how content into the initial system prompt. |
+| `RESOURCE RETRIEVAL` / `Using prompt-based retrieval with the agent's LLM` | `_prepare_resources_for_retrieval` | Start LLM-based resource selection. |
+| `Know-How Documents Retrieved:` / `✓ ...` | `_prepare_resources_for_retrieval` | List selected know-how docs. |
+| `Know-How: None retrieved for this query` | `_prepare_resources_for_retrieval` | No know-how selected. |
+| `RETRIEVAL SUMMARY` | `_prepare_resources_for_retrieval` | Summarize selected resource counts. |
+| `parsing error...` | `generate` | LLM response missing required tags. |
+| `Detected repeated parsing errors, ending conversation` | `generate` | Abort after repeated parsing failures. |
+| `Warning: Could not capture plots...` | `execute` | Plot capture failed during execution. |
